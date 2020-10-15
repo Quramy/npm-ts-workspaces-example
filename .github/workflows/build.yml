@@ -20,7 +20,7 @@ jobs:
         run: |
           # remove after stable version released
           npm i -g npm@7
-          npm ci
+          npm install
           npm run compile
           npm run lint
           npm run test
