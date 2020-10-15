@@ -1,9 +1,11 @@
 # How to build TypeScript mono-repo project
 
+This repository explains how to create monorepos project using npm and TypeScript.
+
 ## Tools
 
-- npm (v7 or later)
-- Lerna: Multiple packages management tool.
+- npm cli(v7 or later)
+- TypeScript
 
 ## Directory Structure
 
@@ -13,7 +15,6 @@ Put each package under the `packages` directory.
 .
 ├── node_modules/
 ├── README.md
-├── lerna.json
 ├── package-lock.json
 ├── package.json
 ├── packages
@@ -45,7 +46,7 @@ Put each package under the `packages` directory.
 
 ## Workspaces
 
-Using [NPM workspace feature](https://github.com/npm/rfcs/blob/latest/implemented/0026-workspaces.md), configure the following files:
+Using [npm workspaces feature](https://github.com/npm/rfcs/blob/latest/implemented/0026-workspaces.md), configure the following files:
 
 - /package.json
 
@@ -58,72 +59,86 @@ Append the `workspaces` key.
 }
 ```
 
-- lerna.json
+Exec `npm install`. After successful running, all dependencies included from each package are downloaded under the repository root `node_modules` directory.
 
-Set `npmClient` `"yarn"` and turn `useWorkspaces` on.
-
-```json
-{
-  "lerna": "2.2.0",
-  "packages": ["packages/*"],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "1.0.0"
-}
-```
-
-Exec `yarn install`(or `lerna bootstrap`). After successful running, all dependency packages are downloaded under the repository root `node_modules` directory.
-
-### Dependencies between packages
+## Dependencies across packages
 
 In this example, the `x-cli` package depends on another package, `x-core`. So to execute (or test) `x-cli`, `x-core` packages should be installed.
 But in development the `x-core` package is not published so you can't install it.
 
-`yarn` solves this problem. This command creates sim-links of each package into the top-level `node_modules` dir.
-
-## Resolve Dependencies as TypeScript Modules
-
-As mentioned above, Lerna resolves dependencies between packages. It's enough for "runtime". However considering TypeScript sources, in other words "static", it's not.
-
-For example, the following code depends a module `x-core` located at other package.
+For example, `packages/x-cli/src/main.spec.ts` is a test code for `main.ts`, which depends on `packages/x-core/src/index.ts` .
 
 ```ts
-/* packages/x-cli/src/main.ts */
-import { awesomeFn } from '@quramy/x-core';
+/* packages/x-cli/src/main.ts.*/
 
-export function cli() {
-  awesomeFn();
-  return Promise.resolve(true);
+import { awesomeFn } from "@quramy/x-core";
+
+export async function main() {
+  // dependencies across child packages
+  const out = await awesomeFn();
+  return out;
 }
 ```
 
-If you compile this code, TypeScript compiler emits a "Cannot find module" error until building `x-core` package and creating `x-core/index.d.ts`. And it's silly to compile dependent packages(e.g. `x-core`) in the same repository after each editing them.
+So we need to link `x-core` package from `x-cli` to execute the `x-cli` 's test.
 
-[TypeScript's path mapping](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping) is the best solution. Path mappings are declared such as:
+Workspaces feature of npm also solves this problem. `npm i` creates sim-links of each package into the top-level `node_modules` dir.
+
+## Resolve Dependencies as TypeScript Modules
+
+As mentioned above, npm cli resolves dependencies across packages. It's enough for "runtime". However considering TypeScript sources, in other words "static", it's not.
+
+We need to tell "x-cli package dependes on x-core" to TypeScript compiler. TypeScript provides much useful feature to do this, ["Project References"](https://www.typescriptlang.org/docs/handbook/project-references.html).
+
+First, you add `composite: true` to project-root tsconfig.json to use project refrences feature.
 
 ```js
 /* tsconfig.json */
+
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./packages",
-    "paths": {
-      "@quramy/*": ["./*/src"]
-    }
+    ...
+    "composite": true
   }
 }
 ```
 
-The above setting means `import { awesomeFn } from "@quramy/x-core"` is mapped to `import { awesomeFn } from "../../x-core/src"`(it's relative from "packages/x-cli/src/main.ts"). In other words, path mapping allows to treat developing packages' sources as published(compiled) modules.
+Second, configure each package's tsconfig and configure dependencies across packages.
+
+```js
+/* packages/x-cli/tsconfig.json */
+
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "references": [{ "path": "../x-core" }]
+}
+```
+
+And create a project which depends on all packages:
+
+```js
+/* tsconfig.build.json */
+
+{
+  "files": [],
+  "references": [{ "path": "packages/x-core" }, { "path": "packages/x-cli" }]
+}
+```
+
+Let's exec `npx tsc --build tsconfig.build.json`. The .ts files included in all packages are build at once!
+
+## Do we still need Lerna ?
+
+Partially, yes.
+
+TypeScript project references and npm workspaces features resolves dependencies across each package in both runtime and compile. So we no longer need `lerna bootstrap` .
+
+But npm cli don't have functions provided by lerna's sub command, such as `lerna version` or `lerna run`. If you want them, you can use lerna or consider introducing another CLI.
 
 ## License
 
 The MIT License (MIT)
-
-Copyright 2017 Quramy
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
