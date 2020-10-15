@@ -3,9 +3,10 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\" tsconfig.build.json",
     "test": "lerna run test",
-    "prepare": "tsc -b tsconfig.build.json",
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\""
+    "compile": "tsc -b tsconfig.build.json",
+    "prepare": "npm run compile"
   },
   "devDependencies": {
     "@types/node": "^14.11.8",
