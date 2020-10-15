@@ -1,0 +1,4 @@
+{
+  "files": [],
+  "references": [{ "path": "packages/x-core" }, { "path": "packages/x-cli" }]
+}

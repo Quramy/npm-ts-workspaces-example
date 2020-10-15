@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Awesome functions",
   "main": "lib/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "test": "echo \"T.B.D.\""
+  },
   "types": "lib/index.d.ts",
   "keywords": [],
-  "author": "",
+  "author": "quramy",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^14.11.8"

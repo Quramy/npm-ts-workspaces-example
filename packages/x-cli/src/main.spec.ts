@@ -1,8 +1,10 @@
-import test from "ava";
+import assert from "assert";
 import { main } from "./main";
 
-test("test", async t => {
+async function test() {
   const actual = await main();
-  t.true(actual);
-});
+  assert(actual != null);
+  console.log("ok");
+}
 
+test();
