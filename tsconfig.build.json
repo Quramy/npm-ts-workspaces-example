@@ -1,0 +1,7 @@
+{
+    "files": [],
+    "references": [
+        { "path": "packages/x-core/tsconfig.build.json" },
+        { "path": "packages/x-cli/tsconfig.build.json" }
+    ]
+}

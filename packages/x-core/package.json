@@ -1,0 +1,16 @@
+{
+  "name": "@quramy/x-core",
+  "version": "1.0.0",
+  "description": "Awesome functions",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^14.11.8"
+  },
+  "devDependencies": {
+    "typescript": "~4.0.3"
+  }
+}

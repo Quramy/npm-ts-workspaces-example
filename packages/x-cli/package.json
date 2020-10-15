@@ -1,0 +1,30 @@
+{
+  "name": "@quramy/x-cli",
+  "version": "1.0.0",
+  "description": "Awesome CLI",
+  "main": "lib/main.js",
+  "bin": {
+    "x-cli": "lib/cli.js"
+  },
+  "scripts": {
+    "test": "ava",
+    "prepare": "tsc -p tsconfig.build.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@quramy/x-core": "^1.0.0",
+    "@types/node": "^14.11.8",
+    "minimist": "^1.2.5"
+  },
+  "devDependencies": {
+    "ava": "^3.13.0",
+    "typescript": "~4.0.3"
+  },
+  "ava": {
+    "files": [
+      "lib/**/*.spec.js"
+    ]
+  }
+}
