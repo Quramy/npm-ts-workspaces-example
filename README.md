@@ -4,6 +4,16 @@
 
 This repository explains how to create monorepos project using npm and TypeScript.
 
+## ToC
+
+- [Tools](#tools)
+- [Directory Structure](#directory-structure)
+- [Workspaces](#workspaces)
+- [Dependencies across packages](#dependencies-across-packages)
+- [Resolve Dependencies as TypeScript Modules](#resolve-dependencies-as-typescript-modules)
+- [Do we still need Lerna ?](#do-we-still-need-lerna-)
+- [License](#license)%
+
 ## Tools
 
 - npm cli(v7 or later)
