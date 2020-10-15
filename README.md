@@ -6,11 +6,12 @@ This repository explains how to create monorepos project using npm and TypeScrip
 
 ## ToC
 
+- [ToC](#toc)
 - [Tools](#tools)
 - [Directory Structure](#directory-structure)
 - [Workspaces](#workspaces)
 - [Dependencies across packages](#dependencies-across-packages)
-- [Resolve Dependencies as TypeScript Modules](#resolve-dependencies-as-typescript-modules)
+- [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
 - [Do we still need Lerna ?](#do-we-still-need-lerna-)
 - [License](#license)
 
@@ -60,13 +61,15 @@ Put each package under the `packages` directory.
 
 Using [npm workspaces feature](https://github.com/npm/rfcs/blob/latest/implemented/0026-workspaces.md), configure the following files:
 
-- /package.json
+Open `package.json` and append the `workspaces` key.
 
-Append the `workspaces` key.
+```js
+/* package.json */
 
-```json
 {
+  "name": "npm-ts-workspaces-example",
   "private": true,
+  ...
   "workspaces": ["packages/*"]
 }
 ```
@@ -96,7 +99,7 @@ So we need to link `x-core` package from `x-cli` to execute the `x-cli` 's test.
 
 Workspaces feature of npm also solves this problem. `npm i` creates sim-links of each package into the top-level `node_modules` dir.
 
-## Resolve Dependencies as TypeScript Modules
+## Resolve dependencies as TypeScript projects
 
 As mentioned above, npm cli resolves dependencies across packages. It's enough for "runtime". However considering TypeScript sources, in other words "static", it's not.
 
