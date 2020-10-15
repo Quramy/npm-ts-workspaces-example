@@ -1,5 +1,7 @@
 # How to build TypeScript mono-repo project
 
+[![github actions](https://github.com/Quramy/npm-ts-workspaces-example/workflows/build/badge.svg)](https://github.com/Quramy/npm-ts-workspaces-example/actions)
+
 This repository explains how to create monorepos project using npm and TypeScript.
 
 ## Tools
@@ -88,9 +90,9 @@ Workspaces feature of npm also solves this problem. `npm i` creates sim-links of
 
 As mentioned above, npm cli resolves dependencies across packages. It's enough for "runtime". However considering TypeScript sources, in other words "static", it's not.
 
-We need to tell "x-cli package dependes on x-core" to TypeScript compiler. TypeScript provides much useful feature to do this, ["Project References"](https://www.typescriptlang.org/docs/handbook/project-references.html).
+We need to tell "x-cli package depends on x-core" to TypeScript compiler. TypeScript provides much useful feature to do this, ["Project References"](https://www.typescriptlang.org/docs/handbook/project-references.html).
 
-First, you add `composite: true` to project-root tsconfig.json to use project refrences feature.
+First, you add `composite: true` to project-root tsconfig.json to use project references feature.
 
 ```js
 /* tsconfig.json */
