@@ -4,7 +4,7 @@
   "description": "Awesome CLI",
   "main": "lib/main.js",
   "bin": {
-    "x-cli": "lib/cli.js"
+    "x-cli": "bin/cli.js"
   },
   "scripts": {
     "compile": "tsc",
