@@ -1,6 +1,3 @@
 {
-  "extends": ["config:base"],
-  "constraints": {
-    "npm": "^7.0.0"
-  }
+  "extends": ["config:base"]
 }
