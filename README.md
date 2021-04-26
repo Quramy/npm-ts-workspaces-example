@@ -13,7 +13,8 @@ This repository explains how to create monorepos project using npm and TypeScrip
 - [Dependencies across packages](#dependencies-across-packages)
 - [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
 - [Do we still need Lerna ?](#do-we-still-need-lerna-)
-- [License](#license)
+  - [Updated](#updated)
+- [License](#license)%
 
 ## Tools
 
@@ -153,6 +154,17 @@ Partially, yes.
 TypeScript project references and npm workspaces features resolves dependencies across each package in both runtime and compile. So we no longer need `lerna bootstrap` .
 
 But npm cli don't have functions provided by lerna's sub command, such as `lerna version` or `lerna run`. If you want them, you can use lerna or consider introducing another CLI.
+
+### Updated
+
+Since npm CLI 7.7,0, we can use [`--workspaces` option](https://docs.npmjs.com/cli/v7/using-npm/workspaces#running-commands-in-the-context-of-workspaces).
+
+```sh
+# Excecute npm test in all workspaces
+$ npm test --workspaces
+```
+
+This option works as well as `lerna run test` .
 
 ## License
 
