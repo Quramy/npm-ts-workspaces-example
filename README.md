@@ -14,7 +14,7 @@ This repository explains how to create monorepos project using npm and TypeScrip
 - [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
 - [Do we still need Lerna ?](#do-we-still-need-lerna-)
   - [Updated](#updated)
-- [License](#license)%
+- [License](#license)
 
 ## Tools
 
@@ -157,7 +157,7 @@ But npm cli don't have functions provided by lerna's sub command, such as `lerna
 
 ### Updated
 
-Since npm CLI 7.7,0, we can use [`--workspaces` option](https://docs.npmjs.com/cli/v7/using-npm/workspaces#running-commands-in-the-context-of-workspaces).
+Since npm CLI 7.7.0, we can use [`--workspaces` option](https://docs.npmjs.com/cli/v7/using-npm/workspaces#running-commands-in-the-context-of-workspaces).
 
 ```sh
 # Excecute npm test in all workspaces
