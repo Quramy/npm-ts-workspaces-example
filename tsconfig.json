@@ -8,7 +8,6 @@
     "composite": true,
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": "./packages",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
