@@ -2,7 +2,7 @@
   "name": "npm-ts-workspaces-example",
   "private": true,
   "scripts": {
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
+    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\" node_modules \"packages/**/node_modules\"",
     "compile": "tsc -b tsconfig.build.json",
     "prettier": "prettier \"*.{js,json,yml,md}\" \"packages/**/*\"",
     "format": "npm run prettier -- --write",
