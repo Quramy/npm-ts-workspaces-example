@@ -12,7 +12,7 @@
   "author": "quramy",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "^16.0.0"
+    "@types/node": "^18.0.0"
   },
   "devDependencies": {
     "typescript": "4.8.4"
