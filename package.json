@@ -2,17 +2,16 @@
   "name": "npm-ts-workspaces-example",
   "private": true,
   "scripts": {
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
+    "clean": "rimraf -g \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
     "prettier": "prettier \"*.{js,json,yml,md}\" \"packages/**/*\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- --check",
     "lint": "npm run format:check",
-    "test": "lerna run test",
+    "test": "npm run --ws test --if-present",
     "prepare": "npm run compile"
   },
   "devDependencies": {
-    "lerna": "6.6.2",
     "prettier": "3.0.0",
     "rimraf": "5.0.5",
     "typescript": "5.1.6"

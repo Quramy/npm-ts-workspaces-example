@@ -6,14 +6,12 @@ This repository explains how to create monorepos project using npm and TypeScrip
 
 ## ToC
 
-- [ToC](#toc)
 - [Tools](#tools)
 - [Directory Structure](#directory-structure)
 - [Workspaces](#workspaces)
 - [Dependencies across packages](#dependencies-across-packages)
 - [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
-- [Do we still need Lerna ?](#do-we-still-need-lerna-)
-  - [Updated](#updated)
+- [How to execute scripts for each package ?](#how-to-execute-scripts-for-each-package-)
 - [License](#license)
 
 ## Tools
@@ -147,24 +145,22 @@ And create a project which depends on all packages:
 
 Let's exec `npx tsc --build tsconfig.build.json`. The .ts files included in all packages are build at once!
 
-## Do we still need Lerna ?
+## How to execute scripts for each package ?
 
-Partially, yes.
-
-TypeScript project references and npm workspaces features resolves dependencies across each package in both runtime and compile. So we no longer need `lerna bootstrap` .
-
-But npm cli don't have functions provided by lerna's sub command, such as `lerna version` or `lerna run`. If you want them, you can use lerna or consider introducing another CLI.
-
-### Updated
-
-Since npm CLI 7.7.0, we can use [`--workspaces` option](https://docs.npmjs.com/cli/v7/using-npm/workspaces#running-commands-in-the-context-of-workspaces).
+We can use [`--workspaces` option](https://docs.npmjs.com/cli/v10/using-npm/workspaces#running-commands-in-the-context-of-workspaces).
 
 ```sh
 # Excecute npm test in all workspaces
 $ npm test --workspaces
 ```
 
-This option works as well as `lerna run test` .
+```sh
+# Bump up packages in all workspaces
+$ npm version --workspaces patch
+
+# Publish packages in all workspaces
+$ npm publish --workspaces
+```
 
 ## License
 

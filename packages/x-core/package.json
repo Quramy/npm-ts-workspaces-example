@@ -4,8 +4,7 @@
   "description": "Awesome functions",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "tsc",
-    "test": "echo \"T.B.D.\""
+    "compile": "tsc"
   },
   "types": "lib/index.d.ts",
   "keywords": [],
