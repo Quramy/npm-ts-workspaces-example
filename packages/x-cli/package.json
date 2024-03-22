@@ -19,6 +19,6 @@
     "minimist": "^1.2.5"
   },
   "devDependencies": {
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }
